@@ -74,6 +74,28 @@ public class sensorvalue {
                     break;
                 case 3:
                     System.out.println("search values by date");
+                    System.out.println("enter date to search");
+                    String  date1= sc.next();
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/homeautomationdb","root","");
+                        String sql="SELECT `temperature`, `humadity`, `moisture` FROM `senservalues` WHERE `date`='"+date1+"' ";
+                        Statement stmt=con.createStatement();
+                        ResultSet rs=stmt.executeQuery(sql);
+                        while ((rs.next())) {
+                            temperature=rs.getInt("temperature");
+                            humadity=rs.getInt("humadity");
+                            moisture=rs.getInt("moisture");
+
+                            System.out.println("temperature=" + temperature);
+                            System.out.println("humadity=" + humadity);
+                            System.out.println("moisture=" + moisture);
+                            System.out.println("\n");
+                        }
+                    }
+                    catch (Exception e){
+                        System.out.println((e));
+                    }
                     break;
                 case 4:
                     System.exit(0);
