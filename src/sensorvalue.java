@@ -1,6 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.util.Scanner;
 
 public class sensorvalue {
@@ -52,6 +50,27 @@ public class sensorvalue {
                     break;
                 case 2:
                     System.out.println("view values");
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/homeautomationdb","root","");
+                        String sql="SELECT `id`, `temperature`, `humadity`, `moisture`, `date` FROM `senservalues` ";
+                        Statement stmt=con.createStatement();
+                        ResultSet rs=stmt.executeQuery(sql);
+                        while ((rs.next())) {
+                            String gettemperature = rs.getString(("temperature"));
+                            String gethumadity= rs.getString(("humadity"));
+                            String getmoisture = rs.getString(("moisture"));
+                            String getdate = rs.getString(("date"));
+                            System.out.println("temperature=" + gettemperature);
+                            System.out.println("humadity=" + gethumadity);
+                            System.out.println("moisture=" + getmoisture);
+                            System.out.println("date=" + getdate);
+                            System.out.println("\n");
+                        }
+                    }
+                    catch (Exception e){
+                        System.out.println((e));
+                    }
                     break;
                 case 3:
                     System.out.println("search values by date");
